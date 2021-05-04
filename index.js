@@ -30,7 +30,7 @@ inquirer.prompt (
             validate: (value)=>{if(value){return true}else{return "need a value to continue!"}}
         },
         {
-            type: "input",
+            type: "list",
             message: "what is your project licence or your badge link",
             name: "licence",
             choices: ['Academic Free License v3.0', 'Apache license 2.0', 'Artistic license 2.0', 'Boost Software License 1.0', 'BSD 2-clause "Simplified" license',
@@ -58,7 +58,8 @@ inquirer.prompt (
 .then(({
     title, Installation, description, usage, licence, git, email
 })=>{
-    const template = `# ${title}
+    const template = `
+    # ${title}
     
     * [Installation](#Installation)
     * [Usage](#Usage)
@@ -74,7 +75,7 @@ inquirer.prompt (
     ${licence}
 
     # Contact
-    * GitHub : ${git}
+    * GitHub : https://api.github.com/users/${git}
     * E-mail : ${email}
     `
     creatNewFile(title, template);
