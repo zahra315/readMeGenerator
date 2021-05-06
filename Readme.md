@@ -1,6 +1,8 @@
 # Professional Readme Generator 
 ## License:
 [![license](https://img.shields.io/badge/license-MIT-blue)](https://shields.io)
+
+![Demo](https://github.com/zahra315/readMeGenerator/blob/main/scr/screen.gif)
     
 ## Contents
 - [Description](#description)
