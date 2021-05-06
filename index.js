@@ -1,10 +1,10 @@
 // node modules
 const inquirer = require('inquirer');
 const fs = require('fs');
+const template = require('./template');
 
-//inquirer to generate questions
-inquirer.prompt (
-    [
+
+ const prompts =  [
         {
             type: "input",
             message: "What is your project title?",
@@ -14,7 +14,7 @@ inquirer.prompt (
         {
             type: "input",
             message: "how do you install your app?",
-            name: "Installation",
+            name: "installation",
             validate: (value)=>{if(value){return true}else{return "need a value to continue!"}}
         },
         {
@@ -32,7 +32,7 @@ inquirer.prompt (
         {
             type: "list",
             message: "what is your project licence or your badge link",
-            name: "licence",
+            name: "license",
             choices: ['Academic Free License v3.0', 'Apache license 2.0', 'Artistic license 2.0', 'Boost Software License 1.0', 'BSD 2-clause "Simplified" license',
         'BSD 3-clause "New" or "Revised" license', 'BSD 3-clause Clear license', 'Creative Commons license family', 'Creative Commons Zero v1.0 Universal', 'Creative Commons Attribution 4.0',
     'Creative Commons Attribution Share Alike 4.0', 'Do What The F*ck You Want To Public License', 'Educational Community License v2.0', 'Eclipse Public License 1.0', 'Eclipse Public License 2.0',
@@ -53,41 +53,22 @@ inquirer.prompt (
             name: "email",
             validate: (value)=>{if(value){return true}else{return "need a value to continue!"}}
         }
-    ]
-)
-.then(({
-    title, Installation, description, usage, licence, git, email
-})=>{
-    const template = `
-    # ${title}
-    
-    * [Installation](#Installation)
-    * [Usage](#Usage)
-    * [Licence](#Licence)
-    
-    ## Installation
-    ${Installation}
-    ## Description
-    ${description}
-    ## Usage
-    ${usage}
-    ## Licence
-    ${licence}
+    ];
 
-    # Contact
-    * GitHub : https://api.github.com/users/${git}
-    * E-mail : ${email}
-    `
-    creatNewFile(title, template);
-});
 
-//display creatNewFile
-
-function creatNewFile(fileName, data){
-    fs.writeFile(`./${fileName.toLowerCase().split('').join('')}.md`, data, (err)=>{
-        if(err){
-            console.log(err);
-        }
+function writeFile(filleName, data){
+    fs.writeFile(filleName, data, (err)=>{
+        if(err)
+        throw err;
         console.log('Your README has been generated');
     });
 };
+
+function init(){
+    inquirer.prompt(prompts).then(function(userInput){
+        console.log(userInput)
+        writeFile('Readme.md', template(userInput));
+    });
+};
+
+init();
